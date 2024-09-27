@@ -3,19 +3,19 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 
 
-function useArrayRef() {
-    const letterRef = useRef([])
-    letterRef.current = []
-    return[letterRef, (ref) => ref && letterRef.current.push(ref)]
+export function useArrayRef() {
+    const arrayRef = useRef([])
+    arrayRef.current = []
+    return[arrayRef, (ref) => ref && arrayRef.current.push(ref)]
 }
 
 const TextReveal = () => {
-    const [letterRef, setLetterRef] = useArrayRef()
+    const [arrayRef, setArrayRef] = useArrayRef()
     const triggerRef = useRef(null)
     gsap.registerPlugin(ScrollTrigger)
 
     useEffect(() => {
-        const reveal = gsap.to(letterRef.current, {
+        const reveal = gsap.to(arrayRef.current, {
             scrollTrigger: {
                 trigger: triggerRef.current,
                 scrub: true,
@@ -29,7 +29,7 @@ const TextReveal = () => {
         return () => {
             reveal.kill()
         }
-    },[letterRef])
+    },[arrayRef])
 
 
     const text = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim nesciunt veritatis voluptatem unde. Perferendis quas deserunt, rem dicta unde quam, non atque quo ullam dolores illum officia, distinctio doloremque sapiente."
@@ -39,7 +39,7 @@ const TextReveal = () => {
             <div>
                 {
                     text.split("").map((letter, index) => (
-                        <span ref={setLetterRef} key={index} className="text-[3rem] text-[#f3f3f3]">{letter}</span>
+                        <span ref={setArrayRef} key={index} className="text-[3rem] text-[#f3f3f3]">{letter}</span>
                     ))
                 }
                
